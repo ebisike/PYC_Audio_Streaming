@@ -20,6 +20,13 @@
         .form-frame {
             border-radius: 1px 30px 1px 30px;
         }
+        
+        .modal-body {
+            background-image: url("https://lh3.googleusercontent.com/proxy/Fk-fn4GhsGegL9rgVlj9MkTQK7hse4UoC_UJ0ArheC-WrCxVVPhs8nZzNOIGN1TGRkOE5VTBdm_RF0TY65gY0e4OCsCoOkDFZXrULNHhwuG4JrW0bRTo9TAb11ejIUhfTdUTq0ex");
+            background-image: no-repeat;
+            background-color: rgba(255, 255, 255, 0.5);
+            background-blend-mode: overlay;
+        }
     </style>
     <div class="container-fluid bg-primary">
         <div class="container">
@@ -42,7 +49,8 @@
                 <h2>comments</h2>
                 <div class="m-0" id="comments">
                     <p id="username" class="text-primary">username</p>
-                    <p id="comment" class="text-dark text-justify mr-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum rerum soluta voluptatem distinctio magnam harum repellendus earum vero sed? Impedit officia quo provident consequatur veritatis dolorem doloremque ea deleniti alias.</p>
+                    <p id="comment" class="text-dark text-justify mr-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum rerum soluta voluptatem distinctio magnam harum repellendus earum vero sed? Impedit officia quo provident consequatur veritatis dolorem doloremque ea deleniti alias.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4 bg-dark form-frame m-2">
@@ -66,7 +74,11 @@
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#exampleModal').modal('show')
+        })
+    </script>
     <script>
         $(document).ready(function() {
             document.querySelector('#clear').addEventListener('click', () => {
@@ -84,6 +96,38 @@
             })
         })
     </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Live Streaming</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>welcome to PYC live streaming page. This page streams live contents from our sunday fellowship.</p>
+                            <p>you can drop your comments as you join us in worship</p>
+                            ..............................................
+                            <p>Please click the play button to listen</p>
+                        </div>
+                        <!-- <div class="col-md-12">
+                            <img src="https://lh3.googleusercontent.com/proxy/Fk-fn4GhsGegL9rgVlj9MkTQK7hse4UoC_UJ0ArheC-WrCxVVPhs8nZzNOIGN1TGRkOE5VTBdm_RF0TY65gY0e4OCsCoOkDFZXrULNHhwuG4JrW0bRTo9TAb11ejIUhfTdUTq0ex" alt="Image of gril listening" class="img img-responsive" width="100%">
+                        </div> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" disabled>Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
