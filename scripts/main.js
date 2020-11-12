@@ -42,15 +42,7 @@ $(document).ready(function() {
 
     //listen for a delete action
     document.querySelector('#commentDiv').addEventListener('click', (e) => {
-        //console.log(e)
-        if (e.target.classList.contains("del")) {
-            //alert('deleteing')
-            if (e.target.classList.contains("fa-trash")) {
-                //alert(e.target.id)
-                deleteComment(e.target.id)
-                return
-            }
-            //alert(e.target.id)
+        if (e.target.classList.contains("del") || e.target.classList.contains("fa-trash")) {
             deleteComment(e.target.id)
             return
         }
@@ -59,7 +51,36 @@ $(document).ready(function() {
     //listen for edit action
     document.querySelector('#commentDiv').addEventListener('click', (e) => {
             if (e.target.classList.contains("edit") || e.target.classList.contains("fa-pencil")) {
-                alert('edit')
+                getCommentToEdit(e.target.id)
+                $('#editModal').modal('show')
+
+                document.querySelector('#editForm').addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    var editData = {
+                            Username: document.querySelector('#usernameInput').value,
+                            Comment: document.querySelector('#commentInput').value
+                        }
+                        //ajax method to submit editted data
+                    $.ajax({
+                        method: "PUT",
+                        url: "https://localhost:44397/api/Reactions/EditReactions",
+                        data: JSON.stringify(editData),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function(resp) {
+                            //console.log(resp)
+                            //alert('Comment Posted')
+                            document.querySelector('#editUsernameInput').value = ""
+                            document.querySelector('#editCommentInput').value = ""
+                            getData()
+                        },
+                        error: function(resp) {
+                            console.log(resp)
+                            console.log("faild to post comment")
+                        }
+                    })
+                })
+                return
             }
         })
         // handle fetching user comments
@@ -93,6 +114,27 @@ $(document).ready(function() {
         })
     }
 
+    function getCommentToEdit(id) {
+        $.ajax({
+            method: "GET",
+            url: `https://localhost:44397/api/Reactions/Edit/?index=${id}`,
+            success: function(resp) {
+                console.log(resp)
+                showEditTextOnUi(resp)
+            },
+            error: function(resp) {
+                console.log("edit not allowd")
+            }
+        })
+    }
+
+    function showEditTextOnUi(data) {
+        document.querySelector('#editUsernameInput').setAttribute("placeholder", data["username"])
+        document.querySelector('#editUsernameInput').setAttribute("value", data["username"])
+        document.querySelector('#editCommentInput').setAttribute("placeholder", data["comment"])
+        document.querySelector('#editCommentInput').setAttribute("value", data["comment"])
+    }
+
     function showCommentsOnUI(arr) {
         commentDiv.textContent = ""
         arr.forEach((data, i) => {
@@ -118,11 +160,12 @@ $(document).ready(function() {
             del.appendChild(delIcon)
 
             //edit buttons
-            edit.setAttribute("href", "#")
+            //edit.setAttribute("href", "#")
             edit.setAttribute("id", i)
             edit.classList.add("btn", "btn-sm", "btn-primary", "ml-1", "edit")
             editIcon.classList.add("fa", "fa-pencil")
             editIcon.setAttribute("aria-hidden", "true")
+            editIcon.setAttribute("id", i)
             edit.appendChild(editIcon)
 
             username.textContent = data["username"]
