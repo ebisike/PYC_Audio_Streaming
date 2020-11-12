@@ -50,46 +50,48 @@ $(document).ready(function() {
 
     //listen for edit action
     document.querySelector('#commentDiv').addEventListener('click', (e) => {
-            if (e.target.classList.contains("edit") || e.target.classList.contains("fa-pencil")) {
-                getCommentToEdit(e.target.id)
-                $('#editModal').modal('show')
+        if (e.target.classList.contains("edit") || e.target.classList.contains("fa-pencil")) {
+            getCommentToEdit(e.target.id)
+            $('#editModal').modal('show')
 
-                document.querySelector('#editForm').addEventListener('submit', (e) => {
-                    e.preventDefault()
-                    var editData = {
-                            Username: document.querySelector('#usernameInput').value,
-                            Comment: document.querySelector('#commentInput').value
-                        }
-                        //ajax method to submit editted data
-                    $.ajax({
-                        method: "PUT",
-                        url: "https://localhost:44397/api/Reactions/EditReactions",
-                        data: JSON.stringify(editData),
-                        dataType: "json",
-                        contentType: "application/json",
-                        success: function(resp) {
-                            //console.log(resp)
-                            //alert('Comment Posted')
-                            document.querySelector('#editUsernameInput').value = ""
-                            document.querySelector('#editCommentInput').value = ""
-                            getData()
-                        },
-                        error: function(resp) {
-                            console.log(resp)
-                            console.log("faild to post comment")
-                        }
-                    })
+            document.querySelector('#editForm').addEventListener('submit', (e) => {
+                e.preventDefault()
+                var editData = {
+                        Username: document.querySelector('#usernameInput').value,
+                        Comment: document.querySelector('#commentInput').value,
+                        Index: e.target.id
+                    }
+                    //ajax method to submit editted data
+                $.ajax({
+                    method: "PUT",
+                    url: "https://localhost:44397/api/Reactions/EditReactions",
+                    data: JSON.stringify(editData),
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function(resp) {
+                        //console.log(resp)
+                        //alert('Comment Posted')
+                        document.querySelector('#editUsernameInput').value = ""
+                        document.querySelector('#editCommentInput').value = ""
+                        getData()
+                    },
+                    error: function(resp) {
+                        console.log(resp)
+                        console.log("faild to edit comment")
+                    }
                 })
-                return
-            }
-        })
-        // handle fetching user comments
+            })
+            return
+        }
+    })
+
+    // handle fetching user comments
     function getData() {
         $.ajax({
             method: 'GET',
             url: "https://localhost:44397/api/Reactions/GetReactions",
             success: function(resp) {
-                console.log(resp)
+                //console.log(resp)
 
                 showCommentsOnUI(resp)
             },
@@ -119,7 +121,7 @@ $(document).ready(function() {
             method: "GET",
             url: `https://localhost:44397/api/Reactions/Edit/?index=${id}`,
             success: function(resp) {
-                console.log(resp)
+                //console.log(resp)
                 showEditTextOnUi(resp)
             },
             error: function(resp) {
