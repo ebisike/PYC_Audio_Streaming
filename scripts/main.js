@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let commentDiv = document.querySelector('#commentDiv')
-    let baseUrl = "https://localhost:44397"
+    let baseUrl = "http://pyc.somee.com"
+    let localBaseUrl = "https://localhost:44397"
     let myUrl = "http://127.0.0.1:5500/index.html"
     setInterval(getData, 1000, `${myUrl}`)
     getData()
