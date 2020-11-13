@@ -212,7 +212,7 @@ $(document).ready(function() {
     }
 
     //listen for action to add a new comment
-    document.querySelector(".fa-plus-circle").addEventListener('click', (e) => {
+    document.querySelector(".add-comment").addEventListener('click', (e) => {
         $('#newComment').modal('show')
     })
 
