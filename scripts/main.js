@@ -1,5 +1,8 @@
 $(document).ready(function() {
     let commentDiv = document.querySelector('#commentDiv')
+    let baseUrl = "https://localhost:44397"
+    let myUrl = "http://127.0.0.1:5500/index.html"
+    setInterval(getData, 1000, `${myUrl}`)
     getData()
 
     //listen for the clear event
@@ -22,7 +25,7 @@ $(document).ready(function() {
         //call a ajax method to submit the data
         $.ajax({
             method: "POST",
-            url: "https://localhost:44397/api/Reactions/PostReactions",
+            url: `${baseUrl}/api/Reactions/PostReactions`,
             data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",
@@ -68,7 +71,7 @@ $(document).ready(function() {
                     //ajax method to submit editted data
                 $.ajax({
                     method: "PUT",
-                    url: `https://localhost:44397/api/Reactions/EditReactions/?index=${idd}`,
+                    url: `${baseUrl}/api/Reactions/EditReactions/?index=${idd}`,
                     data: JSON.stringify(editData),
                     dataType: "json",
                     contentType: "application/json",
@@ -97,11 +100,19 @@ $(document).ready(function() {
     function getData() {
         $.ajax({
             method: 'GET',
-            url: "https://localhost:44397/api/Reactions/GetReactions",
+            url: `${baseUrl}/api/Reactions/GetReactions`,
             success: function(resp) {
-                console.log(resp)
-
+                console.log(typeof(resp))
+                    //console.log(Object.keys(resp).length === 0)
                 showCommentsOnUI(resp)
+
+                // if (Object.keys(resp).length === 0) {
+                //     //commentDiv.textContent = "Sorry! No comments yet. You can use the + button to post new comments"
+                //     showCommentsOnUI(resp)
+                // } else {
+                //     commentDiv.textContent = "Sorry! No comments yet. You can use the + button to post new comments"
+                // }
+
             },
             error: function(resp) {
                 console.log('faled')
@@ -112,7 +123,7 @@ $(document).ready(function() {
     function deleteComment(id) {
         $.ajax({
             method: "GET",
-            url: `https://localhost:44397/api/Reactions/Delete/?index=${id}`,
+            url: `${baseUrl}/api/Reactions/Delete/?index=${id}`,
             success: function(resp) {
                 console.log("Delete PAssed")
                 getData()
@@ -127,7 +138,7 @@ $(document).ready(function() {
     function getCommentToEdit(id) {
         $.ajax({
             method: "GET",
-            url: `https://localhost:44397/api/Reactions/Edit/?index=${id}`,
+            url: `${baseUrl}/api/Reactions/Edit/?index=${id}`,
             success: function(resp) {
                 //console.log(resp)
                 showEditTextOnUi(resp, id)
@@ -144,8 +155,8 @@ $(document).ready(function() {
         document.querySelector('#editCommentInput').setAttribute("placeholder", data["comment"])
         document.querySelector('#editCommentInput').setAttribute("value", data["comment"])
         document.querySelector('#editId').setAttribute("value", index)
-        document.querySelector('#editTime').setAttribute("value", data["Time"])
-        document.querySelector('#editate').setAttribute("value", data["Date"])
+        document.querySelector('#editTime').setAttribute("value", data["time"])
+        document.querySelector('#editate').setAttribute("value", data["date"])
     }
 
     function showCommentsOnUI(arr) {
