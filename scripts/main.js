@@ -1,9 +1,13 @@
 $(document).ready(function() {
     let commentDiv = document.querySelector('#commentDiv')
-    let baseUrl = "http://pyc.somee.com"
+    let baseUrl = "https://pyc.somee.com"
     let localBaseUrl = "https://localhost:44397"
-    let myUrl = "http://127.0.0.1:5500/index.html"
+    let myUrl = "https://ebisike.github.io/pyc/"
+
+    //auto get data after 1sec
     setInterval(getData, 1000, `${myUrl}`)
+
+    //call the service to return comments on page load
     getData()
 
     //listen for the clear event
