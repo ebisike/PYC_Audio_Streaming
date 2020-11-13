@@ -31,6 +31,7 @@ $(document).ready(function() {
                 //alert('Comment Posted')
                 document.querySelector('#usernameInput').value = ""
                 document.querySelector('#commentInput').value = ""
+                $('#newComment').modal('hide')
                 getData()
             },
             error: function(resp) {
@@ -56,28 +57,35 @@ $(document).ready(function() {
 
             document.querySelector('#editForm').addEventListener('submit', (e) => {
                 e.preventDefault()
+                console.log(document.querySelector('#editId').value)
                 var editData = {
-                        Username: document.querySelector('#usernameInput').value,
-                        Comment: document.querySelector('#commentInput').value,
-                        Index: e.target.id
-                    }
+                    Username: document.querySelector('#editUsernameInput').value,
+                    Comment: document.querySelector('#editCommentInput').value,
+                    Time: document.querySelector('#editTime').value,
+                    Date: document.querySelector('#editDate').value
+                }
+                let idd = +document.querySelector('#editId').value
                     //ajax method to submit editted data
                 $.ajax({
                     method: "PUT",
-                    url: "https://localhost:44397/api/Reactions/EditReactions",
+                    url: `https://localhost:44397/api/Reactions/EditReactions/?index=${idd}`,
                     data: JSON.stringify(editData),
                     dataType: "json",
                     contentType: "application/json",
                     success: function(resp) {
                         //console.log(resp)
-                        //alert('Comment Posted')
+                        alert('Comment Editeed!!')
                         document.querySelector('#editUsernameInput').value = ""
                         document.querySelector('#editCommentInput').value = ""
                         getData()
                     },
                     error: function(resp) {
-                        console.log(resp)
+                        console.log(resp.response)
+                        $('#editModal').modal('hide')
                         console.log("faild to edit comment")
+                        document.querySelector('#editUsernameInput').value = ""
+                        document.querySelector('#editCommentInput').value = ""
+                        getData()
                     }
                 })
             })
@@ -91,7 +99,7 @@ $(document).ready(function() {
             method: 'GET',
             url: "https://localhost:44397/api/Reactions/GetReactions",
             success: function(resp) {
-                //console.log(resp)
+                console.log(resp)
 
                 showCommentsOnUI(resp)
             },
@@ -122,7 +130,7 @@ $(document).ready(function() {
             url: `https://localhost:44397/api/Reactions/Edit/?index=${id}`,
             success: function(resp) {
                 //console.log(resp)
-                showEditTextOnUi(resp)
+                showEditTextOnUi(resp, id)
             },
             error: function(resp) {
                 console.log("edit not allowd")
@@ -130,11 +138,14 @@ $(document).ready(function() {
         })
     }
 
-    function showEditTextOnUi(data) {
+    function showEditTextOnUi(data, index) {
         document.querySelector('#editUsernameInput').setAttribute("placeholder", data["username"])
         document.querySelector('#editUsernameInput').setAttribute("value", data["username"])
         document.querySelector('#editCommentInput').setAttribute("placeholder", data["comment"])
         document.querySelector('#editCommentInput').setAttribute("value", data["comment"])
+        document.querySelector('#editId').setAttribute("value", index)
+        document.querySelector('#editTime').setAttribute("value", data["Time"])
+        document.querySelector('#editate').setAttribute("value", data["Date"])
     }
 
     function showCommentsOnUI(arr) {
@@ -171,7 +182,7 @@ $(document).ready(function() {
             edit.appendChild(editIcon)
 
             username.textContent = data["username"]
-            timeStamp.textContent = " | " + data["time"]
+            timeStamp.textContent = " | " + data["date"] + " @" + data["time"]
             comment.textContent = data["comment"]
 
             timeSpan.appendChild(timeStamp)
@@ -189,5 +200,10 @@ $(document).ready(function() {
             commentDiv.append(group)
         })
     }
+
+    //listen for action to add a new comment
+    document.querySelector(".fa-plus-circle").addEventListener('click', (e) => {
+        $('#newComment').modal('show')
+    })
 
 })

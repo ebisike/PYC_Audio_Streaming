@@ -38,7 +38,7 @@
         }
         
         .comment-div {
-            max-height: 250px;
+            max-height: 309px;
             overflow: auto;
             background-color: rgba(255, 255, 255, 0.952);
         }
@@ -52,13 +52,17 @@
             font-size: 0.8em;
             color: rgb(107, 107, 107)
         }
+        
+        .transparent {
+            background-color: rgba(0, 0, 0, 0.95);
+        }
     </style>
     <div class="container-fluid bg-dark">
         <div class="container">
             <div class="row p-3">
                 <div class="col-md-9">
-                    <h1 class="text-capitalize text-white" style="font-size: 400%">welcome</h1>
-                    <h4 class="text-white">Sunday fellowship streaming</h4>
+                    <h1 class="text-capitalize text-white" style="">welcome</h1>
+                    <h6 class="text-white">Sunday fellowship streaming</h6>
                     <p class="text-white text-capitalize">powered by: The Holy Spirit</p>
                 </div>
                 <div class="col-md-3 embed-responsive embed-responsive-16by9">
@@ -68,10 +72,10 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5 mb-5">
+    <div class="container mt-3 mb-5">
         <div class="row">
-            <div class="col-md-8">
-                <h2 class="border-bottom pb-1">comments</h2>
+            <div class="col-md-12">
+                <h4 class="border-bottom pb-1">comments <span><i class="fa fa-plus-circle" aria-hidden="true"></i></span></h4>
                 <div class="m-0 p-3 comment-div" id="commentDiv">
                     <p id="username"><span class="username">username</span> <span><small class="text-small"> | hello xx</small></span></p>
                     <p id="comment" class="text-dark text-justify mr-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum rerum soluta voluptatem distinctio magnam harum repellendus earum vero sed? Impedit officia quo provident consequatur veritatis dolorem doloremque ea deleniti alias.
@@ -99,11 +103,10 @@
                     <hr>
                 </div>
             </div>
-            <div class="col-md-4 bg-dark form-frame mt-5 m-2">
+            <!-- <div class="col-md-4 bg-dark form-frame mt-5 m-2">
                 <div class="row">
                     <div class="col-md-12">
                         <form action="" id="form" class="p-3">
-                            <!-- <p class="text-dark text-uppercase p-1 text-center bg-light">post your comments here</p> -->
                             <div class="form-group">
                                 <label for="" class="text-light">username</label>
                                 <input type="text" name="" id="usernameInput" class="form-control" placeholder="Please enter your username" required>
@@ -117,7 +120,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -151,21 +154,61 @@
         </div>
     </div>
 
+    <!-- Cooment Modal -->
+    <div class="modal fade" id="newComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header transparent text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Add a New Comment</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="text-white">&times;</span>
+        </button>
+                </div>
+                <div class="modal-body transparent">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="" id="form" class="p-3">
+                                <!-- <p class="text-dark text-uppercase p-1 text-center bg-light">post your comments here</p> -->
+                                <div class="form-group">
+                                    <label for="" class="text-warning">username</label>
+                                    <input type="text" name="" id="usernameInput" class="form-control" placeholder="Please enter your username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="text-warning">comment</label>
+                                    <textarea name="" id="commentInput" cols="30" rows="4" class="form-control" placeholder="Your comment here..." required></textarea>
+                                </div>
+                                <input type="submit" value="Submit" class="btn btn-primary">
+                                <input type="button" value="Clear" id="clear" class="btn btn-warning">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer transparent">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" disabled>Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Comment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header transparent">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Edit Comment</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body transparent">
                     <div class="row">
                         <div class="col-md-12">
                             <form action="" id="editForm" class="p-3">
                                 <!-- <p class="text-dark text-uppercase p-1 text-center bg-light">post your comments here</p> -->
+                                <input type="hidden" name="" id="editId">
+                                <input type="hidden" name="" id="editTime">
+                                <input type="hidden" name="" id="editDate">
                                 <div class="form-group">
                                     <label for="" class="text-warning">username</label>
                                     <input type="text" name="" id="editUsernameInput" class="form-control" placeholder="Please enter your username" disabled value="">
@@ -180,10 +223,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" disabled>Save changes</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
