@@ -102,6 +102,7 @@ $(document).ready(function() {
         $.ajax({
             method: 'GET',
             url: `${baseUrl}/api/Reactions/GetReactions`,
+            isLocal: true,
             success: function(resp) {
                 console.log(typeof(resp))
                     //console.log(Object.keys(resp).length === 0)
