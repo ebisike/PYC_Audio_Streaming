@@ -10,6 +10,9 @@ $(document).ready(function() {
     //call the service to return comments on page load
     getData()
 
+    //get client Ip Address
+    //clientIp()
+
     //listen for the clear event
     document.querySelector('#clear').addEventListener('click', () => {
         //alert('cl')
@@ -22,29 +25,17 @@ $(document).ready(function() {
     document.querySelector('#form').addEventListener('submit', (e) => {
         e.preventDefault()
         console.log(document.querySelector('#usernameInput').value)
-        var data = {
-            Username: document.querySelector('#usernameInput').value,
-            Comment: document.querySelector('#commentInput').value
-        }
 
-        //call a ajax method to submit the data
+        //get the client ip first
         $.ajax({
-            method: "POST",
-            url: `${baseUrl}/api/Reactions/PostReactions`,
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-            success: function(resp) {
-                //console.log(resp)
-                //alert('Comment Posted')
-                document.querySelector('#usernameInput').value = ""
-                document.querySelector('#commentInput').value = ""
-                $('#newComment').modal('hide')
-                getData()
+            method: "Get",
+            url: `${localBaseUrl}/api/Reactions/GetIp`,
+            success: function(ip) {
+                //perform the form submission action
+                submitForm(ip)
             },
             error: function(resp) {
-                console.log(resp)
-                console.log("faild to post comment")
+
             }
         })
     })
@@ -76,7 +67,7 @@ $(document).ready(function() {
                     //ajax method to submit editted data
                 $.ajax({
                     method: "PUT",
-                    url: `${baseUrl}/api/Reactions/EditReactions/?index=${idd}`,
+                    url: `${localBaseUrl}/api/Reactions/EditReactions/?index=${idd}`,
                     data: JSON.stringify(editData),
                     dataType: "json",
                     contentType: "application/json",
@@ -105,10 +96,10 @@ $(document).ready(function() {
     function getData() {
         $.ajax({
             method: 'GET',
-            url: `${baseUrl}/api/Reactions/GetReactions`,
+            url: `${localBaseUrl}/api/Reactions/GetReactions`,
             success: function(resp) {
-                console.log(typeof(resp))
-                    //console.log(Object.keys(resp).length === 0)
+                //console.log(resp)
+                //console.log(Object.keys(resp).length === 0)
                 showCommentsOnUI(resp)
 
                 // if (Object.keys(resp).length === 0) {
@@ -128,7 +119,7 @@ $(document).ready(function() {
     function deleteComment(id) {
         $.ajax({
             method: "GET",
-            url: `${baseUrl}/api/Reactions/Delete/?index=${id}`,
+            url: `${localBaseUrl}/api/Reactions/Delete/?index=${id}`,
             success: function(resp) {
                 console.log("Delete PAssed")
                 getData()
@@ -143,7 +134,7 @@ $(document).ready(function() {
     function getCommentToEdit(id) {
         $.ajax({
             method: "GET",
-            url: `${baseUrl}/api/Reactions/Edit/?index=${id}`,
+            url: `${localBaseUrl}/api/Reactions/Edit/?index=${id}`,
             success: function(resp) {
                 //console.log(resp)
                 showEditTextOnUi(resp, id)
@@ -165,8 +156,9 @@ $(document).ready(function() {
     }
 
     function showCommentsOnUI(arr) {
+        //console.log(arr.reactions)
         commentDiv.textContent = ""
-        arr.forEach((data, i) => {
+        arr.reactions.forEach((data, i) => {
             let username = document.createElement('p')
             let timeSpan = document.createElement('span')
             let timeStamp = document.createElement('small')
@@ -179,23 +171,25 @@ $(document).ready(function() {
             let del = document.createElement('a')
             let delIcon = document.createElement('i')
 
-            //delete buttons
-            //del.setAttribute("href", "#")
-            del.setAttribute("id", i)
-            del.classList.add("btn", "btn-sm", "btn-danger", "del")
-            delIcon.classList.add("fa", "fa-trash", "del")
-            delIcon.setAttribute("aria-hidden", "true")
-            delIcon.setAttribute("id", i)
-            del.appendChild(delIcon)
+            if (arr.ip === data["ip"]) {
+                //delete buttons
+                //del.setAttribute("href", "#")
+                del.setAttribute("id", i)
+                del.classList.add("btn", "btn-sm", "btn-danger", "del")
+                delIcon.classList.add("fa", "fa-trash", "del")
+                delIcon.setAttribute("aria-hidden", "true")
+                delIcon.setAttribute("id", i)
+                del.appendChild(delIcon)
 
-            //edit buttons
-            //edit.setAttribute("href", "#")
-            edit.setAttribute("id", i)
-            edit.classList.add("btn", "btn-sm", "btn-primary", "ml-1", "edit")
-            editIcon.classList.add("fa", "fa-pencil")
-            editIcon.setAttribute("aria-hidden", "true")
-            editIcon.setAttribute("id", i)
-            edit.appendChild(editIcon)
+                //edit buttons
+                //edit.setAttribute("href", "#")
+                edit.setAttribute("id", i)
+                edit.classList.add("btn", "btn-sm", "btn-primary", "ml-1", "edit")
+                editIcon.classList.add("fa", "fa-pencil")
+                editIcon.setAttribute("aria-hidden", "true")
+                editIcon.setAttribute("id", i)
+                edit.appendChild(editIcon)
+            }
 
             username.textContent = data["username"]
             timeStamp.textContent = " | " + data["date"] + " @" + data["time"]
@@ -221,5 +215,47 @@ $(document).ready(function() {
     document.querySelector(".fa-plus-circle").addEventListener('click', (e) => {
         $('#newComment').modal('show')
     })
+
+    function clientIp() {
+        $.ajax({
+            method: "Get",
+            url: `${localBaseUrl}/api/Reactions/GetIp`,
+            success: function(resp) {
+                console.log("Your Ip Address is: ", resp)
+            },
+            error: function(resp) {
+                console.log(resp)
+                console.log("failed to get Ip")
+            }
+        })
+    }
+
+    function submitForm(ip) {
+        var data = {
+            Username: document.querySelector('#usernameInput').value,
+            Comment: document.querySelector('#commentInput').value,
+            IpAddress: ip
+        }
+
+        //call a ajax method to submit the data
+        $.ajax({
+            method: "POST",
+            url: `${localBaseUrl}/api/Reactions/PostReactions`,
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(resp) {
+                //console.log(resp)
+                //alert('Comment Posted')
+                document.querySelector('#usernameInput').value = ""
+                document.querySelector('#commentInput').value = ""
+                $('#newComment').modal('hide')
+            },
+            error: function(resp) {
+                console.log(resp)
+                console.log("faild to post comment")
+            }
+        })
+    }
 
 })
