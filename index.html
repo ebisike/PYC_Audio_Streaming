@@ -177,7 +177,7 @@
                                 <!-- <p class="text-dark text-uppercase p-1 text-center bg-light">post your comments here</p> -->
                                 <div class="form-group">
                                     <label for="" class="text-warning">username</label>
-                                    <input type="text" name="" id="usernameInput" class="form-control" placeholder="Please enter your username" required>
+                                    <input type="text" name="" id="usernameInput" class="form-control" placeholder="" required disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="text-warning">comment</label>
@@ -226,6 +226,38 @@
                                 <input type="submit" value="Submit" class="btn btn-primary">
                                 <input type="button" value="Clear" id="clear" class="btn btn-danger">
                             </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" disabled>Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Native username Modal -->
+    <div class="modal fade" id="enterUsername" tabindex="-1" role="dialog" aria-labelledby="enterUsernamelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header transparent">
+                    <h5 class="modal-title text-white" id="enterUsernameLabel">Set Default username for interraction</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body transparent">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="" id="usernameForm" class="p-3">
+                                <div class="form-group">
+                                    <label for="" class="text-warning">username</label>
+                                    <input type="text" name="" id="localUsername" class="form-control" placeholder="Please enter your username" value="">
+                                </div>
+                                <input type="submit" value="Submit" class="btn btn-primary">
+                            </form>
+                            <p class="text-white">This username will be used to interract on this web app for the next 24hrs, after which your session will be ended.</p>
                         </div>
                     </div>
                 </div>

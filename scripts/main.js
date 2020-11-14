@@ -4,6 +4,9 @@ $(document).ready(function() {
     let localBaseUrl = "https://localhost:44397"
     let myUrl = "https://ebisike.github.io/pyc/"
 
+    let nativeUser = localStorage.getItem("Pyc_Straming_Username")
+    console.log("from main js==", nativeUser)
+
     //auto get data after 1sec
     setInterval(getData, 1000, `${myUrl}`)
 
@@ -171,7 +174,7 @@ $(document).ready(function() {
             let del = document.createElement('a')
             let delIcon = document.createElement('i')
 
-            if (arr.ip === data["ip"]) {
+            if (nativeUser === data["username"]) {
                 //delete buttons
                 //del.setAttribute("href", "#")
                 del.setAttribute("id", i)
@@ -213,6 +216,8 @@ $(document).ready(function() {
 
     //listen for action to add a new comment
     document.querySelector(".add-comment").addEventListener('click', (e) => {
+        document.querySelector('#usernameInput').setAttribute('value', nativeUser)
+        document.querySelector('#usernameInput').setAttribute('placeholder', nativeUser)
         $('#newComment').modal('show')
     })
 
