@@ -6,6 +6,8 @@ $(document).ready(function() {
 
     let nativeUser = localStorage.getItem("Pyc_Straming_Username")
     console.log("from main js==", nativeUser)
+    document.querySelector('#usernameInput').setAttribute('value', nativeUser)
+    document.querySelector('#usernameInput').setAttribute('placeholder', nativeUser)
 
     //auto get data after 1sec
     setInterval(getData, 1000, `${myUrl}`)
@@ -19,7 +21,6 @@ $(document).ready(function() {
     //listen for the clear event
     document.querySelector('#clear').addEventListener('click', () => {
         //alert('cl')
-        document.querySelector('#usernameInput').value = ""
         document.querySelector('#commentInput').value = ""
     })
 
@@ -27,7 +28,8 @@ $(document).ready(function() {
     //listen for form submission
     document.querySelector('#form').addEventListener('submit', (e) => {
         e.preventDefault()
-        console.log(document.querySelector('#usernameInput').value)
+        console.log("locall storage user ", nativeUser)
+        console.log("Form user ", document.querySelector('#usernameInput').value)
 
         //get the client ip first
         $.ajax({
@@ -216,8 +218,6 @@ $(document).ready(function() {
 
     //listen for action to add a new comment
     document.querySelector(".add-comment").addEventListener('click', (e) => {
-        document.querySelector('#usernameInput').setAttribute('value', nativeUser)
-        document.querySelector('#usernameInput').setAttribute('placeholder', nativeUser)
         $('#newComment').modal('show')
     })
 
@@ -237,7 +237,7 @@ $(document).ready(function() {
 
     function submitForm(ip) {
         var data = {
-            Username: document.querySelector('#usernameInput').value,
+            Username: nativeUser,
             Comment: document.querySelector('#commentInput').value,
             IpAddress: ip
         }
@@ -251,8 +251,6 @@ $(document).ready(function() {
             contentType: "application/json",
             success: function(resp) {
                 //console.log(resp)
-                //alert('Comment Posted')
-                document.querySelector('#usernameInput').value = ""
                 document.querySelector('#commentInput').value = ""
                 $('#newComment').modal('hide')
             },
