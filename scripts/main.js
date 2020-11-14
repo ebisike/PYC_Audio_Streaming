@@ -29,7 +29,7 @@ $(document).ready(function() {
         //get the client ip first
         $.ajax({
             method: "Get",
-            url: `${localBaseUrl}/api/Reactions/GetIp`,
+            url: `${baseUrl}/api/Reactions/GetIp`,
             success: function(ip) {
                 //perform the form submission action
                 submitForm(ip)
@@ -67,7 +67,7 @@ $(document).ready(function() {
                     //ajax method to submit editted data
                 $.ajax({
                     method: "PUT",
-                    url: `${localBaseUrl}/api/Reactions/EditReactions/?index=${idd}`,
+                    url: `${baseUrl}/api/Reactions/EditReactions/?index=${idd}`,
                     data: JSON.stringify(editData),
                     dataType: "json",
                     contentType: "application/json",
@@ -96,7 +96,7 @@ $(document).ready(function() {
     function getData() {
         $.ajax({
             method: 'GET',
-            url: `${localBaseUrl}/api/Reactions/GetReactions`,
+            url: `${baseUrl}/api/Reactions/GetReactions`,
             success: function(resp) {
                 //console.log(resp)
                 //console.log(Object.keys(resp).length === 0)
@@ -119,7 +119,7 @@ $(document).ready(function() {
     function deleteComment(id) {
         $.ajax({
             method: "GET",
-            url: `${localBaseUrl}/api/Reactions/Delete/?index=${id}`,
+            url: `${baseUrl}/api/Reactions/Delete/?index=${id}`,
             success: function(resp) {
                 console.log("Delete PAssed")
                 getData()
@@ -134,7 +134,7 @@ $(document).ready(function() {
     function getCommentToEdit(id) {
         $.ajax({
             method: "GET",
-            url: `${localBaseUrl}/api/Reactions/Edit/?index=${id}`,
+            url: `${baseUrl}/api/Reactions/Edit/?index=${id}`,
             success: function(resp) {
                 //console.log(resp)
                 showEditTextOnUi(resp, id)
@@ -219,7 +219,7 @@ $(document).ready(function() {
     function clientIp() {
         $.ajax({
             method: "Get",
-            url: `${localBaseUrl}/api/Reactions/GetIp`,
+            url: `${baseUrl}/api/Reactions/GetIp`,
             success: function(resp) {
                 console.log("Your Ip Address is: ", resp)
             },
@@ -240,7 +240,7 @@ $(document).ready(function() {
         //call a ajax method to submit the data
         $.ajax({
             method: "POST",
-            url: `${localBaseUrl}/api/Reactions/PostReactions`,
+            url: `${baseUrl}/api/Reactions/PostReactions`,
             data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",
