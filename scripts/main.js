@@ -27,6 +27,7 @@ $(document).ready(function() {
 
     //listen for form submission
     document.querySelector('#form').addEventListener('submit', (e) => {
+        $('#newComment').modal('hide')
         e.preventDefault()
         console.log("locall storage user ", nativeUser)
         console.log("Form user ", document.querySelector('#usernameInput').value)
