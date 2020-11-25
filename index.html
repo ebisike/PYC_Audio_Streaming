@@ -58,6 +58,10 @@
             background-color: rgba(0, 0, 0, 0.95);
         }
         
+        .transparentx {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
         .fa-plus-circle:hover {
             cursor: pointer;
             color: rgb(255, 124, 2);
@@ -73,6 +77,9 @@
                 </div>
                 <div class="col-md-3 embed-responsive embed-responsive-16by9">
                     <iframe src="https://streams.radiomast.io/station/323c579f-53d7-4c8e-a68f-f15674ce6b08/player/widget?t=dark&s=670cd48e-fc35-448e-82c7-a5d90acf3854" width="360" height="320" scrolling="no" frameborder="0" allow="autoplay" class="embed-responsive-item"></iframe>
+
+                    <!-- <iframe src="https://streams.radiomast.io/station/323c579f-53d7-4c8e-a68f-f15674ce6b08/player/widget?t=dark&s=670cd48e-fc35-448e-82c7-a5d90acf3854" width="360" height="320" scrolling="no" frameborder="0" allow="autoplay" class="embed-responsive-item"></iframe> -->
+
                     <!-- <iframe src="https://streams.radiomast.io/station/323c579f-53d7-4c8e-a68f-f15674ce6b08/player/widget?s=670cd48e-fc35-448e-82c7-a5d90acf3854" width="360" height="320" scrolling="no" frameborder="0" allow="autoplay" class="embed-responsive-item" allowfullscreen></iframe> -->
                 </div>
             </div>
@@ -268,6 +275,37 @@
             </div>
         </div>
     </div>
+
+    <!-- Maintainance Modal -->
+    <div class="modal fade" id="maintain" tabindex="-1" role="dialog" aria-labelledby="enterUsernamelLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- <div class="modal-header transparent">
+                    <h5 class="modal-title text-white" id="enterUsernameLabel">Set Default username for interraction</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+                <div class="modal-body transparentx">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="main.jpg" alt="" class="img img-responsive img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" disabled>Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#maintain').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    </script>
     <script src="./scripts/cookie.js"></script>
     <script src="./scripts/main.js"></script>
 </body>
