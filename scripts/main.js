@@ -4,6 +4,9 @@ $(document).ready(function() {
     let localBaseUrl = "https://localhost:44397"
     let myUrl = "https://ebisike.github.io/pyc/"
 
+    var appx = new App();
+    console.log(appx.isUsernameSet())
+
     let nativeUser = localStorage.getItem("Pyc_Straming_Username")
     console.log("from main js==", nativeUser)
     document.querySelector('#usernameInput').setAttribute('value', nativeUser)
