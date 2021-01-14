@@ -60,8 +60,6 @@ class UI {
     }
 
     showEditTextOnUi = (data, index) => {
-        document.querySelector('#editUsernameInput').setAttribute("placeholder", data["username"])
-        document.querySelector('#editUsernameInput').setAttribute("value", data["username"])
         document.querySelector('#editCommentInput').setAttribute("placeholder", data["comment"])
         document.querySelector('#editCommentInput').setAttribute("value", data["comment"])
         document.querySelector('#editId').setAttribute("value", index)

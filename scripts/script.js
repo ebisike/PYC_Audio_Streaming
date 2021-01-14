@@ -10,25 +10,32 @@ $(document).ready(function() {
 
 
     //auto get data after 1sec
-    setInterval(myApp.fetchComments(myApp.getUsername()), 1000, `${myUrl}`)
+    //setInterval(myApp.fetchComments(), 1000)
+    setInterval(function() {
+        myApp.fetchComments()
+    }, 1000)
 
     //check if this app instance has a username set in localstorage
     if (!myApp.isUsernameSet()) {
         //call the function to get the user to input username
+        console.log("from gehe")
         username = myApp.enterUsername();
     }
 
-    myApp.fetchComments(myApp.getUsername())
+    console.log(document.querySelectorAll('.addUsernameHere'))
+    document.querySelectorAll('.addUsernameHere').forEach(item => {
+        item.textContent = ""
+        item.append(myApp.getUsername())
+    })
 
     //listen for action to add a new comment
     document.querySelector(".add-comment").addEventListener('click', (e) => {
-        document.querySelector('#usernameInput').setAttribute('value', myApp.getUsername())
-        document.querySelector('#usernameInput').setAttribute('placeholder', myApp.getUsername())
         $('#newComment').modal('show')
     })
 
     //listen for the clear event
-    document.querySelector('#clear').addEventListener('click', () => {
+    //console.log(document.querySelector('#clear'))
+    document.querySelector('#clear').addEventListener('click', (e) => {
         document.querySelector('#commentInput').value = ""
     })
 
@@ -42,7 +49,7 @@ $(document).ready(function() {
 
         //submit the comment
         myApp.postComment()
-            //myApp.fetchComments(myApp.getUsername())
+        myApp.fetchComments()
     })
 
 

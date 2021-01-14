@@ -33,6 +33,7 @@ class App {
         })
 
         //-listen for a submit event on the modal form
+        console.log(document.querySelector('#usernameForm'))
         document.querySelector('#usernameForm').addEventListener('submit', (e) => {
             e.preventDefault()
             $('#enterUsername').modal('hide')
@@ -66,8 +67,8 @@ class App {
             success: function(resp) {
                 console.log(resp)
                 document.querySelector('#commentInput').value = ""
-                $('#newComment').modal('hide')
-                window.location.reload()
+                    //$('#newComment').modal('hide')
+                    //window.location.reload()
                     //new App().fetchComments(new App().getUsername())
             },
             error: function(resp) {
@@ -81,13 +82,18 @@ class App {
     // handle fetching user comments
     fetchComments = (username) => {
         //alert('helo')
+        //console.log("You are ", this.getUsername())
+        var x = this.getUsername()
+        if (!x) {
+            x = " "
+        }
         $.ajax({
             method: 'GET',
             url: `${this.baseUrl}/api/Reactions/GetReactions`,
             success: function(resp) {
-                //console.log(resp)
+                //console.log("resp")
                 var Ui = new UI()
-                Ui.showCommentsOnUI(resp, username)
+                Ui.showCommentsOnUI(resp, x)
             },
             error: function(resp) {
                 console.log('faled')
@@ -131,8 +137,6 @@ class App {
                 console.log("faild to edit comment")
                 document.querySelector('#editUsernameInput').value = ""
                 document.querySelector('#editCommentInput').value = ""
-                window.location.reload()
-                    //new App().fetchComments(new App().getUsername())
             }
         })
     }
@@ -144,7 +148,6 @@ class App {
             url: `${this.baseUrl}/api/Reactions/Delete/?index=${commentId}`,
             success: function(resp) {
                 console.log("Delete PAssed")
-                window.location.reload()
             },
             error: function(resp) {
                 console.log("Delete Failed")
