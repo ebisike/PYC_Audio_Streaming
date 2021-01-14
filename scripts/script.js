@@ -18,10 +18,12 @@ $(document).ready(function() {
     //check if this app instance has a username set in localstorage
     if (!myApp.isUsernameSet()) {
         //call the function to get the user to input username
-        console.log("from gehe")
         username = myApp.enterUsername();
-    }
 
+    } else {
+        myApp.welcomeText($('#welcome-text'), "")
+    }
+    console.log($('#welcome-text'))
     console.log(document.querySelectorAll('.addUsernameHere'))
     document.querySelectorAll('.addUsernameHere').forEach(item => {
         item.textContent = ""

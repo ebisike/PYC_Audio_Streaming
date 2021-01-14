@@ -19,7 +19,7 @@ class UI {
             let del = document.createElement('a')
             let delIcon = document.createElement('i')
 
-            if (localUsername === data["username"]) {
+            if (localUsername.toLowerCase() === data["username"].toLowerCase()) {
                 //delete buttons
                 //del.setAttribute("href", "#")
                 del.setAttribute("id", i)

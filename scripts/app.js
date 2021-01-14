@@ -41,8 +41,14 @@ class App {
             console.log('app: ', nativeUsername)
 
             this.setUsername(nativeUsername)
+            window.location.reload()
             return nativeUsername
         })
+    }
+
+    welcomeText = (div, text) => {
+        div.textContent = ""
+        div.append(text + " " + this.getUsername().toUpperCase().bold())
     }
 
     //CRUD operation on User Comments
